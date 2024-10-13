@@ -1,5 +1,6 @@
 package com.transys.async;
 
+import java.io.IOException;
 import java.util.concurrent.ExecutionException;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +15,7 @@ public class PlcWriteProcessor {
 	private PlcWriteService plcWriteService;	
 	
 	@Scheduled(fixedRate = 2000)
-	public void handle() throws InterruptedException, ExecutionException{
+	public void handle() throws InterruptedException, ExecutionException, IOException{
 		plcWriteService.plcWriteTimer();
 	}
 }

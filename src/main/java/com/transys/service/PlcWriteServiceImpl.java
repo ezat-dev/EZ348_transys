@@ -1,14 +1,17 @@
 package com.transys.service;
 
+import java.io.IOException;
 import java.util.Map;
 import java.util.concurrent.ExecutionException;
 
+import org.apache.poi.util.SystemOutLogger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.transys.controller.MainController;
 import com.transys.dao.PlcWriteDao;
 import com.transys.domain.PlcWrite;
+import com.transys.util.LogDataSave;
 import com.transys.util.OpcDataMap;
 
 @Service
@@ -18,10 +21,10 @@ public class PlcWriteServiceImpl implements PlcWriteService{
 	private PlcWriteDao plcWriteDao;
 	
 	//PLCWRITE
-	public void plcWrite() throws InterruptedException, ExecutionException {
+	public void plcWrite() throws InterruptedException, ExecutionException, IOException {
 //		System.out.println("PLCWRITE ");
 		OpcDataMap opcData = new OpcDataMap();
-
+		
 		//DB데이터 조회 (t_waitlist)
 		PlcWrite plcWrite = plcWriteDao.getPlcWriteWorkData();
 //		System.out.println(plcWrite.getList_year());
@@ -32,7 +35,7 @@ public class PlcWriteServiceImpl implements PlcWriteService{
 		String list_year = plcWrite.getList_year();
 //		System.out.println("list_year 11 : "+list_year);
 		if(!"".equals(list_year) && list_year != null) {
-//			System.out.println("list_year 22 : "+list_year);
+			System.out.println("list_year 22 : "+list_year);
 			//OPC값 쓰기
 			//outData1, outData2, outData3, outData4, outData5			
 			opcData.setOpcData("Transys.PLCWRITE.LOTNO", plcWrite.getLotno());
@@ -64,8 +67,15 @@ public class PlcWriteServiceImpl implements PlcWriteService{
 			//DB값 삭제 (OUTPUT_TAB)
 			plcWriteDao.setPlcWriteDataDelete(plcWrite);
 			
+			System.out.println("로그저장 시작");
+			
 			//각 설비에 해당되는 outPutChk값 false
 			int device = Integer.parseInt(plcWrite.getDevicecode());
+			LogDataSave logDataSave = new LogDataSave();
+			
+			logDataSave.logDataSaveFile("PLCWRITE", plcWrite.getLotno()+"적용완료");
+			
+			System.out.println("로그저장 끝");
 			
 			switch (device) {
 				case 1 : MainController.outPutChk1 = false; break;
@@ -78,7 +88,7 @@ public class PlcWriteServiceImpl implements PlcWriteService{
 	}
 	
 	
-	public void plcWriteTimer() throws InterruptedException, ExecutionException {
+	public void plcWriteTimer() throws InterruptedException, ExecutionException, IOException {
 		boolean output_chk = false;
 		OpcDataMap opcData = new OpcDataMap();
 		

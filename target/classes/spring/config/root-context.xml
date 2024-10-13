@@ -37,8 +37,8 @@
 	<!-- 창고DB(Oracle) -->
 	<bean id="dataSourceOracle" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close"> 
 		<property name="driverClassName" value="oracle.jdbc.driver.OracleDriver" /> 
-		<property name="url" value="jdbc:oracle:thin:@localhost:1521/ORCL" /> 
-		<property name="username" value="fire" /> 
+		<property name="url" value="jdbc:oracle:thin:@192.168.1.59:1521/ORCL" /> 
+		<property name="username" value="FIRE" /> 
 		<property name="password" value="ezat6695"/>
 	</bean>
 
