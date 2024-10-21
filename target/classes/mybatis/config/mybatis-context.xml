@@ -10,5 +10,6 @@
    <mapper resource="mybatis/mapper/work.xml"/>  
    <mapper resource="mybatis/mapper/plcWrite.xml"/>
    <mapper resource="mybatis/mapper/mchInput.xml"/>
+   <mapper resource="mybatis/mapper/tracking.xml"/>
   </mappers>
 </configuration>

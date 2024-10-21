@@ -22,6 +22,7 @@
 	<bean id="mchInputProcessor" class="com.transys.async.MchInputProcessor"/>
 	<bean id="outPutProcessor" class="com.transys.async.OutPutProcessor"/>
 	<bean id="arrivedTabProcessor" class="com.transys.async.ArrivedTabProcessor"/>
+	<bean id="trackingProcessor" class="com.transys.async.TrackingProcessor"/>
 	<task:scheduler id="scheduler" pool-size="4" />
 	<task:executor id="executor" keep-alive="10" pool-size="10-20"
 		queue-capacity="10" rejection-policy="ABORT" />
